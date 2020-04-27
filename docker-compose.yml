@@ -1,0 +1,21 @@
+---
+version: "2"
+services:
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: wordpress
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - URL=linuxserver-test.com
+      - SUBDOMAINS=www,ombi
+      - VALIDATION=http
+    volumes:
+      - /home/aptalca/appdata/letsencrypt:/config
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped
