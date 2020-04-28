@@ -15,7 +15,6 @@ services:
       - URL=tomthegreat.com
       - SUBDOMAINS=wildcard
       - VALIDATION=http
-      - DNSPLUGIN=cloudflare
     volumes:
       - /docker/wordpress/config:/config
       - /docker/wordpress/html:/var/www/default
