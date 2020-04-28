@@ -4,18 +4,24 @@ services:
   letsencrypt:
     image: linuxserver/letsencrypt
     container_name: wordpress
+    restart: unless-stopped
+    mem_swappiness: -1
     cap_add:
       - NET_ADMIN
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-      - URL=linuxserver-test.com
-      - SUBDOMAINS=www,ombi
+      - PUID=100
+      - PGID=1027
+      - TZ=America/Chicago
+      - URL=tomthegreat.com
+      - SUBDOMAINS=wildcard
       - VALIDATION=http
+      - DNSPLUGIN=cloudflare
     volumes:
-      - /home/aptalca/appdata/letsencrypt:/config
+      - /docker/wordpress/config:/config
+      - /docker/wordpress/html:/var/www/default
+    network_mode: bridge
     ports:
       - 443:443
       - 80:80
-    restart: unless-stopped
+    depends_on:
+      - mariadb
